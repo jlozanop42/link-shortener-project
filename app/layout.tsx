@@ -1,5 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import {
+  ClerkProvider,
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
+import { Button } from "@/components/ui/button";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,12 +33,39 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <ClerkProvider
+      signInFallbackRedirectUrl="/dashboard"
+      signUpFallbackRedirectUrl="/dashboard"
+      appearance={{ baseTheme: dark }}
+    >
+      <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground dark`}
+        >
+          <header>
+            <SignedOut>
+              <div className="flex items-center gap-2">
+                <SignInButton
+                  forceRedirectUrl="/dashboard"
+                  mode="redirect"
+                >
+                  <Button variant="secondary">Sign in</Button>
+                </SignInButton>
+                <SignUpButton
+                  forceRedirectUrl="/dashboard"
+                  mode="redirect"
+                >
+                  <Button>Sign up</Button>
+                </SignUpButton>
+              </div>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
