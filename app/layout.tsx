@@ -8,7 +8,7 @@ import {
   SignedOut,
   UserButton,
 } from "@clerk/nextjs";
-import { dark } from "@clerk/themes";
+import { shadcn } from "@clerk/themes";
 import { Button } from "@/components/ui/button";
 import { Link2 } from "lucide-react";
 import "./globals.css";
@@ -37,7 +37,7 @@ export default function RootLayout({
     <ClerkProvider
       signInFallbackRedirectUrl="/dashboard"
       signUpFallbackRedirectUrl="/dashboard"
-      appearance={{ baseTheme: dark }}
+      appearance={{ theme: shadcn }}
     >
       <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
         <body
