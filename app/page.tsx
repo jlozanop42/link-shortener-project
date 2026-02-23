@@ -20,12 +20,12 @@ export default function Home() {
           
           <SignedOut>
             <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
-              <SignUpButton forceRedirectUrl="/dashboard" mode="redirect">
+              <SignUpButton forceRedirectUrl="/dashboard" mode="modal">
                 <Button size="lg" className="text-lg px-8">
                   Get Started Free
                 </Button>
               </SignUpButton>
-              <SignInButton forceRedirectUrl="/dashboard" mode="redirect">
+              <SignInButton forceRedirectUrl="/dashboard" mode="modal">
                 <Button size="lg" variant="outline" className="text-lg px-8">
                   Sign In
                 </Button>
@@ -107,7 +107,7 @@ export default function Home() {
                 Join thousands of users who trust our platform for their link shortening needs
               </p>
               <SignedOut>
-                <SignUpButton forceRedirectUrl="/dashboard" mode="redirect">
+                <SignUpButton forceRedirectUrl="/dashboard" mode="modal">
                   <Button size="lg" className="text-lg px-8">
                     Create Your Free Account
                   </Button>
