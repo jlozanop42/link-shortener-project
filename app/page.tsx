@@ -19,17 +19,12 @@ export default function Home() {
           </div>
           
           <SignedOut>
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div className="flex justify-center">
               <SignUpButton forceRedirectUrl="/dashboard" mode="modal">
                 <Button size="lg" className="text-lg px-8">
                   Get Started Free
                 </Button>
               </SignUpButton>
-              <SignInButton forceRedirectUrl="/dashboard" mode="modal">
-                <Button size="lg" variant="outline" className="text-lg px-8">
-                  Sign In
-                </Button>
-              </SignInButton>
             </div>
           </SignedOut>
         </div>
