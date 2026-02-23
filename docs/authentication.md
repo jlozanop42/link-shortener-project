@@ -8,8 +8,8 @@ This application uses **Clerk** for all authentication and authorization. No oth
 ### Authentication Provider
 - **ONLY** use Clerk for authentication
 - Never implement custom auth logic (JWT, sessions, passwords, etc.)
-- Sign-in and sign-up flows must redirect to Clerk-hosted URLs
-- Sign-in and sign-up open a Clerk-hosted page in the same browser tab (no modal)
+- Sign-in and sign-up flows must open as a modal pop-up in the same page (not redirect to Clerk-hosted URLs)
+- Sign-in and sign-up use `mode="modal"` on Clerk buttons
 
 ### Protected Routes
 - `/dashboard` is a protected route requiring authentication
