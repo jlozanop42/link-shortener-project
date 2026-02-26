@@ -18,3 +18,4 @@ ALWAYS refer to the relevant .md file in `/docs` BEFORE generating any code:
 ## Notes
 - If instructions conflict, follow higher-priority system and developer messages first.
 - Keep changes minimal and consistent with the existing codebase.
+- **NEVER use middleware.ts** - This is deprecated in later versions of Next.js (including the version used in this project). Always use `proxy.ts` instead for middleware functionality.
