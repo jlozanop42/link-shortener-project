@@ -1,3 +1,7 @@
+---
+description: Read this before creating or modifying any UI components. This file outlines the rules and guidelines for using shadcn/ui as the exclusive UI component library in this application.
+---
+
 # UI Components
 
 ## Overview
