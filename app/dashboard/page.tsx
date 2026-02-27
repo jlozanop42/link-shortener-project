@@ -3,12 +3,13 @@ import { getUserLinks } from "@/data/links";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link2, ExternalLink, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   const user = await currentUser();
 
   if (!user) {
-    return null;
+    redirect("/sign-in");
   }
 
   // Query user's links from the database
