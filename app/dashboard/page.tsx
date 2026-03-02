@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Link2, ExternalLink, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
+import { CreateLinkDialog } from "./create-link-dialog";
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -38,7 +39,7 @@ export default async function DashboardPage() {
                     Get started by creating your first shortened link
                   </p>
                 </div>
-                <Button>Create Link</Button>
+                <CreateLinkDialog />
               </div>
             </CardContent>
           </Card>
@@ -48,7 +49,7 @@ export default async function DashboardPage() {
               <p className="text-sm text-muted-foreground">
                 {userLinks.length} {userLinks.length === 1 ? 'link' : 'links'} total
               </p>
-              <Button>Create New Link</Button>
+              <CreateLinkDialog />
             </div>
 
             {userLinks.map((link) => (

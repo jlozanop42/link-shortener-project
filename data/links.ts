@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { links } from "@/db/schema";
+import { links, type NewLink } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 
 /**
@@ -13,4 +13,17 @@ export async function getUserLinks(userId: string) {
     .from(links)
     .where(eq(links.userId, userId))
     .orderBy(desc(links.createdAt));
+}
+
+/**
+ * Create a new shortened link
+ * @param data - The link data (userId, originalUrl, shortCode)
+ * @returns The created link
+ */
+export async function createLink(data: NewLink) {
+  const [link] = await db
+    .insert(links)
+    .values(data)
+    .returning();
+  return link;
 }
