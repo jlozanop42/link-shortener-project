@@ -3,17 +3,23 @@ import { NextResponse } from "next/server";
 
 const isDashboardRoute = createRouteMatcher(["/dashboard(.*)"]);
 
-export default clerkMiddleware((auth, req) => {
-  const { userId } = auth;
+export default clerkMiddleware(async (auth, req) => {
+  const { userId, sessionClaims } = await auth();
 
-  if (req.nextUrl.pathname === "/" && userId) {
+  // Check if session is expired
+  const isSessionExpired = sessionClaims?.exp 
+    ? sessionClaims.exp * 1000 < Date.now() 
+    : false;
+
+  // Only redirect if user has valid session
+  if (req.nextUrl.pathname === "/" && userId && !isSessionExpired) {
     const url = req.nextUrl.clone();
     url.pathname = "/dashboard";
     return NextResponse.redirect(url);
   }
 
   if (isDashboardRoute(req)) {
-    auth.protect();
+    await auth.protect();
   }
 
   return NextResponse.next();
