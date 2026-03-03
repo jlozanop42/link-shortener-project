@@ -27,3 +27,52 @@ export async function createLink(data: NewLink) {
     .returning();
   return link;
 }
+
+/**
+ * Update an existing link
+ * @param linkId - The ID of the link to update
+ * @param userId - The Clerk user ID (for authorization)
+ * @param data - The updated link data
+ * @returns The updated link or null if not found or unauthorized
+ */
+export async function updateLink(
+  linkId: number,
+  userId: string,
+  data: { originalUrl?: string; shortCode?: string }
+) {
+  const [link] = await db
+    .update(links)
+    .set({
+      ...data,
+      updatedAt: new Date(),
+    })
+    .where(eq(links.id, linkId))
+    .returning();
+  
+  // Verify ownership
+  if (!link || link.userId !== userId) {
+    return null;
+  }
+  
+  return link;
+}
+
+/**
+ * Delete a link
+ * @param linkId - The ID of the link to delete
+ * @param userId - The Clerk user ID (for authorization)
+ * @returns True if deleted, false if not found or unauthorized
+ */
+export async function deleteLink(linkId: number, userId: string) {
+  const [link] = await db
+    .delete(links)
+    .where(eq(links.id, linkId))
+    .returning();
+  
+  // Verify ownership
+  if (!link || link.userId !== userId) {
+    return false;
+  }
+  
+  return true;
+}
