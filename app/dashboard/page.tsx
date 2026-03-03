@@ -5,6 +5,8 @@ import { Link2, ExternalLink, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import { CreateLinkDialog } from "./create-link-dialog";
+import { EditLinkDialog } from "./edit-link-dialog";
+import { DeleteLinkDialog } from "./delete-link-dialog";
 
 export default async function DashboardPage() {
   const user = await currentUser();
@@ -67,16 +69,20 @@ export default async function DashboardPage() {
                         {link.originalUrl}
                       </CardDescription>
                     </div>
-                    <Button variant="ghost" size="icon" asChild>
-                      <a
-                        href={link.originalUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Open original link"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    </Button>
+                    <div className="flex items-center gap-1">
+                      <EditLinkDialog link={link} />
+                      <DeleteLinkDialog link={link} />
+                      <Button variant="ghost" size="icon" asChild>
+                        <a
+                          href={link.originalUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Open original link"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                 </CardHeader>
                 <CardContent>
