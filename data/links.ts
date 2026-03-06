@@ -58,6 +58,21 @@ export async function updateLink(
 }
 
 /**
+ * Get a link by its short code
+ * @param shortCode - The short code to look up
+ * @returns The link or null if not found
+ */
+export async function getLinkByShortCode(shortCode: string) {
+  const [link] = await db
+    .select()
+    .from(links)
+    .where(eq(links.shortCode, shortCode))
+    .limit(1);
+  
+  return link || null;
+}
+
+/**
  * Delete a link
  * @param linkId - The ID of the link to delete
  * @param userId - The Clerk user ID (for authorization)
