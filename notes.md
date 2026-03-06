@@ -13,3 +13,12 @@ third party service, like Neon database. Then, github copilot chat can interact 
 * For example run some SQL queries and insert some data to the database.
 
 This means we can do these using natural language directly in vscode.
+
+__________________________________________
+Github CLI
+We can use literally the same but from the CLI
+/ to interact with the CLI
+@ to tag (Like the #) to add to the context of the prompt.
+
+Hooks
+Hooks allow you to extend and customize the behavior of Github Copilot agents by executing custom shell commands at key points during agent execution. 
