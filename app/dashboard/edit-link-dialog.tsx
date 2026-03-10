@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,59 +9,59 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { updateLinkAction } from './action'
-import { useRouter } from 'next/navigation'
-import { Pencil } from 'lucide-react'
-import type { Link } from '@/db/schema'
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { updateLinkAction } from './action';
+import { useRouter } from 'next/navigation';
+import { Pencil } from 'lucide-react';
+import type { Link } from '@/db/schema';
 
 interface EditLinkDialogProps {
-  link: Link
+  link: Link;
 }
 
 export function EditLinkDialog({ link }: EditLinkDialogProps) {
-  const [open, setOpen] = useState(false)
-  const [originalUrl, setOriginalUrl] = useState(link.originalUrl)
-  const [shortCode, setShortCode] = useState(link.shortCode)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
+  const [open, setOpen] = useState(false);
+  const [originalUrl, setOriginalUrl] = useState(link.originalUrl);
+  const [shortCode, setShortCode] = useState(link.shortCode);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setIsLoading(true)
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
 
     const result = await updateLinkAction({
       id: link.id,
       originalUrl,
       shortCode: shortCode.trim(),
-    })
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
 
     if ('error' in result) {
-      setError(result.error)
+      setError(result.error);
     } else {
       // Success - close dialog
-      setOpen(false)
-      setError(null)
+      setOpen(false);
+      setError(null);
       // Refresh the page to show the updated link
-      router.refresh()
+      router.refresh();
     }
-  }
+  };
 
   // Reset form when dialog opens
   const handleOpenChange = (newOpen: boolean) => {
-    setOpen(newOpen)
+    setOpen(newOpen);
     if (newOpen) {
-      setOriginalUrl(link.originalUrl)
-      setShortCode(link.shortCode)
-      setError(null)
+      setOriginalUrl(link.originalUrl);
+      setShortCode(link.shortCode);
+      setError(null);
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -129,5 +129,5 @@ export function EditLinkDialog({ link }: EditLinkDialogProps) {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

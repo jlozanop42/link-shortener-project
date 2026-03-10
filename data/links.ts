@@ -1,6 +1,6 @@
-import { db } from "@/db";
-import { links, type NewLink } from "@/db/schema";
-import { eq, desc } from "drizzle-orm";
+import { db } from '@/db';
+import { links, type NewLink } from '@/db/schema';
+import { eq, desc } from 'drizzle-orm';
 
 /**
  * Get all links for a specific user
@@ -21,10 +21,7 @@ export async function getUserLinks(userId: string) {
  * @returns The created link
  */
 export async function createLink(data: NewLink) {
-  const [link] = await db
-    .insert(links)
-    .values(data)
-    .returning();
+  const [link] = await db.insert(links).values(data).returning();
   return link;
 }
 
@@ -38,7 +35,7 @@ export async function createLink(data: NewLink) {
 export async function updateLink(
   linkId: number,
   userId: string,
-  data: { originalUrl?: string; shortCode?: string }
+  data: { originalUrl?: string; shortCode?: string },
 ) {
   const [link] = await db
     .update(links)
@@ -48,12 +45,12 @@ export async function updateLink(
     })
     .where(eq(links.id, linkId))
     .returning();
-  
+
   // Verify ownership
   if (!link || link.userId !== userId) {
     return null;
   }
-  
+
   return link;
 }
 
@@ -68,7 +65,7 @@ export async function getLinkByShortCode(shortCode: string) {
     .from(links)
     .where(eq(links.shortCode, shortCode))
     .limit(1);
-  
+
   return link || null;
 }
 
@@ -79,15 +76,12 @@ export async function getLinkByShortCode(shortCode: string) {
  * @returns True if deleted, false if not found or unauthorized
  */
 export async function deleteLink(linkId: number, userId: string) {
-  const [link] = await db
-    .delete(links)
-    .where(eq(links.id, linkId))
-    .returning();
-  
+  const [link] = await db.delete(links).where(eq(links.id, linkId)).returning();
+
   // Verify ownership
   if (!link || link.userId !== userId) {
     return false;
   }
-  
+
   return true;
 }

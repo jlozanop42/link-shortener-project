@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
 import {
   ClerkProvider,
   SignInButton,
@@ -7,25 +7,26 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-} from "@clerk/nextjs";
-import { shadcn } from "@clerk/themes";
-import { Button } from "@/components/ui/button";
-import { Link2 } from "lucide-react";
-import "./globals.css";
+} from '@clerk/nextjs';
+import { shadcn } from '@clerk/themes';
+import { Button } from '@/components/ui/button';
+import { Link2 } from 'lucide-react';
+import './globals.css';
 
 const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
 });
 
 const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
-  title: "Link Shortener - Fast, Secure URL Shortening",
-  description: "Transform long URLs into powerful, trackable short links. Fast, secure, and built for modern teams.",
+  title: 'Link Shortener - Fast, Secure URL Shortening',
+  description:
+    'Transform long URLs into powerful, trackable short links. Fast, secure, and built for modern teams.',
 };
 
 export default function RootLayout({
@@ -39,7 +40,7 @@ export default function RootLayout({
       signUpFallbackRedirectUrl="/dashboard"
       appearance={{ theme: shadcn }}
     >
-      <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
+      <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground dark`}
         >
@@ -51,16 +52,10 @@ export default function RootLayout({
               </div>
               <SignedOut>
                 <div className="flex items-center gap-2">
-                  <SignInButton
-                    forceRedirectUrl="/dashboard"
-                    mode="modal"
-                  >
+                  <SignInButton forceRedirectUrl="/dashboard" mode="modal">
                     <Button variant="ghost">Sign in</Button>
                   </SignInButton>
-                  <SignUpButton
-                    forceRedirectUrl="/dashboard"
-                    mode="modal"
-                  >
+                  <SignUpButton forceRedirectUrl="/dashboard" mode="modal">
                     <Button>Sign up</Button>
                   </SignUpButton>
                 </div>

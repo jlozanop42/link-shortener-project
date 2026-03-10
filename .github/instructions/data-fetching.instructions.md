@@ -1,7 +1,9 @@
 ---
 description: Read this file to understand how to fetch data in this project.
 ---
+
 # Data Fetching Guidelines
+
 This document outlines the best practices for fetching data in this project. Follow these guidelines to ensure consistency, performance, and maintainability across the codebase.
 
 ## 1. Use server components for data fetching

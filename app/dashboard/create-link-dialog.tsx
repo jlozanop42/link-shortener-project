@@ -1,7 +1,7 @@
-'use client'
+'use client';
 
-import { useState } from 'react'
-import { Button } from '@/components/ui/button'
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -9,45 +9,45 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { createLinkAction } from './action'
-import { useRouter } from 'next/navigation'
-import { Plus } from 'lucide-react'
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { createLinkAction } from './action';
+import { useRouter } from 'next/navigation';
+import { Plus } from 'lucide-react';
 
 export function CreateLinkDialog() {
-  const [open, setOpen] = useState(false)
-  const [originalUrl, setOriginalUrl] = useState('')
-  const [shortCode, setShortCode] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const router = useRouter()
+  const [open, setOpen] = useState(false);
+  const [originalUrl, setOriginalUrl] = useState('');
+  const [shortCode, setShortCode] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setIsLoading(true)
+    e.preventDefault();
+    setError(null);
+    setIsLoading(true);
 
     const result = await createLinkAction({
       originalUrl,
       shortCode: shortCode.trim() || undefined,
-    })
+    });
 
-    setIsLoading(false)
+    setIsLoading(false);
 
     if ('error' in result) {
-      setError(result.error)
+      setError(result.error);
     } else {
       // Success - close dialog and reset form
-      setOpen(false)
-      setOriginalUrl('')
-      setShortCode('')
-      setError(null)
+      setOpen(false);
+      setOriginalUrl('');
+      setShortCode('');
+      setError(null);
       // Refresh the page to show the new link
-      router.refresh()
+      router.refresh();
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -61,7 +61,8 @@ export function CreateLinkDialog() {
         <DialogHeader>
           <DialogTitle>Create New Link</DialogTitle>
           <DialogDescription>
-            Create a shortened link by providing the original URL and an optional custom short code.
+            Create a shortened link by providing the original URL and an
+            optional custom short code.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -91,7 +92,8 @@ export function CreateLinkDialog() {
               maxLength={20}
             />
             <p className="text-sm text-muted-foreground">
-              Optional: 3-20 characters. Letters, numbers, hyphens, and underscores only. Leave empty to auto-generate.
+              Optional: 3-20 characters. Letters, numbers, hyphens, and
+              underscores only. Leave empty to auto-generate.
             </p>
           </div>
           {error && (
@@ -115,5 +117,5 @@ export function CreateLinkDialog() {
         </form>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

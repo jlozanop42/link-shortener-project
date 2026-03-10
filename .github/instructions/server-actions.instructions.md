@@ -17,31 +17,37 @@ All data mutations in this application **MUST** be done via server actions.
 ## Server Action Implementation
 
 ### 1. Type Safety
+
 - All data passed to server actions **MUST** have appropriate TypeScript types
 - **DO NOT** use the `FormData` TypeScript type
 - Define explicit interfaces or types for action parameters
 
 ### 2. Data Validation
+
 - All data **MUST** be validated using Zod schemas
 - Validation should happen at the beginning of the server action
 - Return appropriate error messages if validation fails
 
 ### 3. Authentication
+
 - All server actions **MUST** check for a logged-in user before continuing with database operations
 - Use Clerk's authentication methods to verify the user session
 - Return an error if the user is not authenticated
 
 ### 4. Database Operations
+
 - Server actions **MUST NOT** directly use drizzle queries
 - Database operations **MUST** be done via helper functions that wrap drizzle queries
 - These helper functions are located in the `/data` directory
 - Import and use these helper functions from the `/data` directory in your server actions
 
 ### 5. Client Components
+
 - Server actions **MUST** be called from client components
 - Use the `"use client"` directive in components that call server actions
 
 ### 6. Error Handling
+
 - Server actions **MUST NOT** throw errors
 - Instead, return an object with either an `error` or `success` property
 - Use a consistent return type structure across all server actions
@@ -53,30 +59,30 @@ All data mutations in this application **MUST** be done via server actions.
 
 ```typescript
 // app/dashboard/links/action.ts
-'use server'
+'use server';
 
-import { z } from 'zod'
-import { auth } from '@clerk/nextjs/server'
-import { createLink } from '@/data/links'
+import { z } from 'zod';
+import { auth } from '@clerk/nextjs/server';
+import { createLink } from '@/data/links';
 
 const createLinkSchema = z.object({
   url: z.string().url(),
   slug: z.string().min(1),
-})
+});
 
-type CreateLinkInput = z.infer<typeof createLinkSchema>
+type CreateLinkInput = z.infer<typeof createLinkSchema>;
 
 export async function createLinkAction(input: CreateLinkInput) {
   // 1. Check authentication
-  const { userId } = await auth()
+  const { userId } = await auth();
   if (!userId) {
-    return { error: 'Unauthorized' }
+    return { error: 'Unauthorized' };
   }
 
   // 2. Validate input
-  const validationResult = createLinkSchema.safeParse(input)
+  const validationResult = createLinkSchema.safeParse(input);
   if (!validationResult.success) {
-    return { error: 'Invalid input', details: validationResult.error }
+    return { error: 'Invalid input', details: validationResult.error };
   }
 
   // 3. Use helper function from /data
@@ -84,10 +90,10 @@ export async function createLinkAction(input: CreateLinkInput) {
     const link = await createLink({
       userId,
       ...validationResult.data,
-    })
-    return { success: true, data: link }
+    });
+    return { success: true, data: link };
   } catch (error) {
-    return { error: 'Failed to create link' }
+    return { error: 'Failed to create link' };
   }
 }
 ```

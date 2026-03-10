@@ -1,18 +1,24 @@
-import { currentUser } from "@clerk/nextjs/server";
-import { getUserLinks } from "@/data/links";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link2, ExternalLink, Calendar } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { redirect } from "next/navigation";
-import { CreateLinkDialog } from "./create-link-dialog";
-import { EditLinkDialog } from "./edit-link-dialog";
-import { DeleteLinkDialog } from "./delete-link-dialog";
+import { currentUser } from '@clerk/nextjs/server';
+import { getUserLinks } from '@/data/links';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Link2, ExternalLink, Calendar } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { redirect } from 'next/navigation';
+import { CreateLinkDialog } from './create-link-dialog';
+import { EditLinkDialog } from './edit-link-dialog';
+import { DeleteLinkDialog } from './delete-link-dialog';
 
 export default async function DashboardPage() {
   const user = await currentUser();
 
   if (!user) {
-    redirect("/sign-in");
+    redirect('/sign-in');
   }
 
   // Query user's links from the database
@@ -23,9 +29,7 @@ export default async function DashboardPage() {
       <div className="container mx-auto max-w-6xl">
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-          <p className="text-muted-foreground">
-            Manage your shortened links
-          </p>
+          <p className="text-muted-foreground">Manage your shortened links</p>
         </div>
 
         {userLinks.length === 0 ? (
@@ -49,7 +53,8 @@ export default async function DashboardPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between mb-4">
               <p className="text-sm text-muted-foreground">
-                {userLinks.length} {userLinks.length === 1 ? 'link' : 'links'} total
+                {userLinks.length} {userLinks.length === 1 ? 'link' : 'links'}{' '}
+                total
               </p>
               <CreateLinkDialog />
             </div>
@@ -90,10 +95,11 @@ export default async function DashboardPage() {
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       <span>
-                        Created {new Date(link.createdAt).toLocaleDateString('en-US', {
+                        Created{' '}
+                        {new Date(link.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
-                          year: 'numeric'
+                          year: 'numeric',
                         })}
                       </span>
                     </div>
